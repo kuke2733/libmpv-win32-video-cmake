@@ -27,6 +27,9 @@ ExternalProject_Add(ffmpeg
         shaderc
         libplacebo
         dav1d
+        libvpx
+        libdovi
+        aom
         openal-soft
     GIT_REPOSITORY https://github.com/FFmpeg/FFmpeg.git
     SOURCE_DIR ${SOURCE_LOCATION}
@@ -94,6 +97,10 @@ ExternalProject_Add(ffmpeg
         --enable-libssh
 
         --enable-libjxl
+        --enable-libdav1d
+        --enable-libvpx
+        --enable-libass
+        --enable-libdovi
 
         --enable-avutil
         --enable-avcodec
@@ -130,6 +137,38 @@ ExternalProject_Add(ffmpeg
         --enable-decoder=dca
         --enable-decoder=dca
         --enable-decoder=truehd
+
+        --enable-decoder=h264
+        --enable-decoder=hevc
+        --enable-decoder=vp8
+        --enable-decoder=vp9
+        --enable-decoder=av1
+        --enable-decoder=mpeg1video
+        --enable-decoder=mpeg2video
+        --enable-decoder=mpeg4
+        --enable-decoder=msmpeg4v*
+        --enable-decoder=vc1
+        --enable-decoder=wmv1
+        --enable-decoder=wmv2
+        --enable-decoder=wmv3
+        --enable-decoder=h263
+        --enable-decoder=theora
+        --enable-decoder=prores
+        --enable-decoder=dnxhd
+        --enable-decoder=rv*
+        --enable-decoder=svq*
+        --enable-decoder=vp6
+        --enable-decoder=vp6f
+        --enable-decoder=vp6a
+        --enable-decoder=flv
+        --enable-decoder=ass
+        --enable-decoder=ssa
+        --enable-decoder=mov_text
+        --enable-decoder=pgssub
+        --enable-decoder=dvdsub
+        --enable-decoder=dvbsub
+        --enable-decoder=subrip
+        --enable-decoder=srt
 
         --enable-decoder=mjpeg
         --enable-decoder=ljpeg
@@ -171,6 +210,19 @@ ExternalProject_Add(ffmpeg
         --enable-demuxer=dts
         --enable-demuxer=dtshd
 
+        --enable-demuxer=mpegts
+        --enable-demuxer=mpeg
+        --enable-demuxer=mpegvideo
+        --enable-demuxer=mpegps
+        --enable-demuxer=webm
+        --enable-demuxer=hls
+        --enable-demuxer=concat
+        --enable-demuxer=wtv
+        --enable-demuxer=ogv
+        --enable-demuxer=3gp
+        --enable-demuxer=wmv
+        --enable-demuxer=mpegtsraw
+
         --enable-parser=aac*
         --enable-parser=ac3
         --enable-parser=cook
@@ -180,9 +232,30 @@ ExternalProject_Add(ffmpeg
         --enable-parser=tak
         --enable-parser=vorbis
         --enable-parser=dca
+        --enable-parser=h264
+        --enable-parser=hevc
+        --enable-parser=vp9
+        --enable-parser=mpegvideo
+        --enable-parser=mpeg4video
+        --enable-parser=av1
+        --enable-parser=ass
+
+        --enable-bsf=extract_extradata
+        --enable-bsf=h264_metadata
+        --enable-bsf=hevc_metadata
+        --enable-bsf=vp9_metadata
+        --enable-bsf=av1_metadata
+        --enable-bsf=mov2textsub
+        --enable-bsf=text2movsub
 
         --enable-filter=overlay
         --enable-filter=equalizer
+        --enable-filter=subtitles
+        --enable-filter=scale
+        --enable-filter=format
+        --enable-filter=null
+        --enable-filter=hwdownload
+        --enable-filter=hwupload
 
         --enable-protocol=async
         --enable-protocol=cache
@@ -215,7 +288,8 @@ ExternalProject_Add(ffmpeg
 	--enable-encoder=jpegls
 
         --enable-network
-        
+
+        ${ffmpeg_hwaccel}
         ${ffmpeg_cuda}
         ${ffmpeg_lto}
         --extra-cflags='-Wno-error=int-conversion'
