@@ -1,6 +1,6 @@
 --- a/libunwind/src/Unwind-seh.cpp
 +++ b/libunwind/src/Unwind-seh.cpp
-@@ -136,7 +136,7 @@
+@@ -143,7 +143,7 @@
      // If we were called by __libunwind_seh_personality(), indicate that
      // a handler was found; otherwise, initiate phase 2 by unwinding.
      if (ours && ms_exc->NumberParameters > 1)
@@ -9,7 +9,8 @@
      // This should never happen in phase 2.
      if (IS_UNWINDING(ms_exc->ExceptionFlags))
        _LIBUNWIND_ABORT("Personality indicated exception handler in phase 2!");
-@@ -154,7 +154,7 @@
+@@ -160,7 +160,7 @@
+     // If we were called by __libunwind_seh_personality(), indicate that
      // a handler was found; otherwise, it's time to initiate a collided
      // unwind to the target.
      if (ours && !IS_UNWINDING(ms_exc->ExceptionFlags) && ms_exc->NumberParameters > 1)
@@ -18,7 +19,9 @@
      // This should never happen in phase 1.
      if (!IS_UNWINDING(ms_exc->ExceptionFlags))
        _LIBUNWIND_ABORT("Personality installed context during phase 1!");
-@@ -217,13 +217,12 @@ __libunwind_seh_personality(int version, _Unwind_Action state,
+@@ -221,13 +221,12 @@ __libunwind_seh_personality(int version, _Unwind_Action state,
+   _LIBUNWIND_TRACE_UNWINDING("__libunwind_seh_personality() calling "
+                              "LanguageHandler %p(%p, %p, %p, %p)",
                               (void *)disp_ctx->LanguageHandler, (void *)&ms_exc,
                               (void *)disp_ctx->EstablisherFrame,
                               (void *)disp_ctx->ContextRecord, (void *)disp_ctx);
