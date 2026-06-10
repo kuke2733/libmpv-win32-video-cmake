@@ -7,6 +7,7 @@ ExternalProject_Add(llvm
     UPDATE_COMMAND ""
     GIT_REMOTE_NAME origin
     GIT_TAG release/20.x
+    PATCH_COMMAND ${EXEC} patch -p1 -d <SOURCE_DIR> -i ${CMAKE_CURRENT_SOURCE_DIR}/llvm/llvm-unwind-seh-0001-exception-disposition.patch
     LIST_SEPARATOR ,
     CONFIGURE_COMMAND ${EXEC} CONF=1 PATH=$O_PATH cmake -H<SOURCE_DIR>/llvm -B<BINARY_DIR>
         -G Ninja
