@@ -3,6 +3,7 @@ ExternalProject_Add(llvm-libcxx
         llvm-compiler-rt-builtin
     DOWNLOAD_COMMAND ""
     UPDATE_COMMAND ""
+    PATCH_COMMAND ${EXEC} patch -p1 -N -d <SOURCE_DIR> -i ${CMAKE_CURRENT_SOURCE_DIR}/llvm/llvm-unwind-seh-0001-exception-disposition.patch
     SOURCE_DIR ${LLVM_SRC}
     LIST_SEPARATOR ,
     CONFIGURE_COMMAND ${EXEC} CONF=1 cmake -H<SOURCE_DIR>/runtimes -B<BINARY_DIR>
@@ -40,7 +41,7 @@ ExternalProject_Add(llvm-libcxx
     BUILD_COMMAND ${EXEC} LTO=0 ninja -C <BINARY_DIR>
     INSTALL_COMMAND ${EXEC} LTO=0 ninja -C <BINARY_DIR> install
             COMMAND bash -c "cp ${MINGW_INSTALL_PREFIX}/lib/libc++.a ${MINGW_INSTALL_PREFIX}/lib/libstdc++.a"
-    LOG_DOWNLOAD 1 LOG_UPDATE 1 LOG_CONFIGURE 1 LOG_BUILD 1 LOG_INSTALL 1
+    LOG_DOWNLOAD 1 LOG_UPDATE 1 LOG_PATCH 1 LOG_CONFIGURE 1 LOG_BUILD 1 LOG_INSTALL 1
 )
 
 cleanup(llvm-libcxx install)
