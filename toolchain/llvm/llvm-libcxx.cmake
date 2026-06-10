@@ -1,9 +1,11 @@
+set(LLVM_LIBUNWIND_SEH_PATCH ${PROJECT_SOURCE_DIR}/toolchain/llvm/llvm-unwind-seh-0001-exception-disposition.patch)
+
 ExternalProject_Add(llvm-libcxx
     DEPENDS
         llvm-compiler-rt-builtin
     DOWNLOAD_COMMAND ""
     UPDATE_COMMAND ""
-    PATCH_COMMAND ${EXEC} patch -p1 -N -d <SOURCE_DIR> -i ${CMAKE_CURRENT_SOURCE_DIR}/llvm/llvm-unwind-seh-0001-exception-disposition.patch
+    PATCH_COMMAND ${EXEC} bash -c "if grep -qF 'static_cast<EXCEPTION_DISPOSITION>(4)' <SOURCE_DIR>/libunwind/src/Unwind-seh.cpp 2>/dev/null; then echo 'libunwind SEH patch already applied'; else patch -p1 -N -d <SOURCE_DIR> -i ${LLVM_LIBUNWIND_SEH_PATCH}; fi"
     SOURCE_DIR ${LLVM_SRC}
     LIST_SEPARATOR ,
     CONFIGURE_COMMAND ${EXEC} CONF=1 cmake -H<SOURCE_DIR>/runtimes -B<BINARY_DIR>
